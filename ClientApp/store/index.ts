@@ -4,8 +4,9 @@ import * as Successintwominutes from './Successes';
 
 // The top-level state object
 export interface ApplicationState {
-    counter: Counter.CounterState;
-    weatherForecasts: WeatherForecasts.WeatherForecastsState;
+	counter: Counter.CounterState;
+	weatherForecasts: WeatherForecasts.WeatherForecastsState;
+	successes: Successintwominutes.SuccessRecordsState;
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using

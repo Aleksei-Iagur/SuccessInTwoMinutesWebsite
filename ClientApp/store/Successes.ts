@@ -20,20 +20,20 @@ export interface SuccessRecord {
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 
-interface RequestWeatherForecastsAction {
+interface RequestSuccessesAction {
     type: 'REQUEST_SUCCESSES';
     startDateIndex: number;
 }
 
-interface ReceiveWeatherForecastsAction {
+interface ReceiveSuccessesAction {
     type: 'RECEIVE_SUCCESSES';
     startDateIndex: number;
-    forecasts: SuccessRecord[];
+    successes: SuccessRecord[];
 }
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-type KnownAction = RequestWeatherForecastsAction | ReceiveWeatherForecastsAction;
+type KnownAction = RequestSuccessesAction | ReceiveSuccessesAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -46,7 +46,7 @@ export const actionCreators = {
             let fetchTask = fetch(`api/SampleData/WeatherForecasts?startDateIndex=${ startDateIndex }`)
                 .then(response => response.json() as Promise<SuccessRecord[]>)
                 .then(data => {
-                    dispatch({ type: 'RECEIVE_SUCCESSES', startDateIndex: startDateIndex, forecasts: data });
+                    dispatch({ type: 'RECEIVE_SUCCESSES', startDateIndex: startDateIndex, successes: data });
                 });
 
             addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
@@ -75,7 +75,7 @@ export const reducer: Reducer<SuccessRecordsState> = (state: SuccessRecordsState
             if (action.startDateIndex === state.startDateIndex) {
                 return {
                     startDateIndex: action.startDateIndex,
-					successRecords: action.forecasts,
+					successRecords: action.successes,
                     isLoading: false
                 };
             }
