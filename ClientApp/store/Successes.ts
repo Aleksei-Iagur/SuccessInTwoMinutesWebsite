@@ -40,10 +40,10 @@ type KnownAction = RequestSuccessesAction | ReceiveSuccessesAction;
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-    requestWeatherForecasts: (startDateIndex: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        // Only load data if it's something we don't already have (and are not already loading)
-        if (startDateIndex !== getState().weatherForecasts.startDateIndex) {
-            let fetchTask = fetch(`api/SampleData/WeatherForecasts?startDateIndex=${ startDateIndex }`)
+    requestSucessRecords: (startDateIndex: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+		// Only load data if it's something we don't already have (and are not already loading)
+		if (startDateIndex !== getState().successes.startDateIndex) {
+			let fetchTask = fetch(`api/SampleData/SuccessRecords?startDateIndex=${ startDateIndex }`)
                 .then(response => response.json() as Promise<SuccessRecord[]>)
                 .then(data => {
                     dispatch({ type: 'RECEIVE_SUCCESSES', startDateIndex: startDateIndex, successes: data });
