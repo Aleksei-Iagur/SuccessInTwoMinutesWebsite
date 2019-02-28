@@ -10,7 +10,14 @@ type SuccessInTwoMinutesProps =
 	& typeof SuccessRecordsState.actionCreators      // ... plus action creators we've requested
     & RouteComponentProps<{ startDateIndex: string }>; // ... plus incoming routing parameters
 
-class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, {}> {
+class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { successRecords: SuccessRecordsState.SuccessRecord[], num: number}> {
+	constructor(ps: SuccessInTwoMinutesProps) {
+		super();
+		this.state = {
+			successRecords: ps.successRecords,
+			num: 0
+		};
+	}
     componentWillMount() {
         // This method runs when the component is first added to the page
 		let startDateIndex = parseInt(this.props.match.params.startDateIndex) || 0;
@@ -42,7 +49,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, {}> 
                 </tr>
             </thead>
 			<tbody>
-				{this.props.successRecords.map(successRecord =>
+				{this.state.successRecords.map(successRecord =>
                 <tr key={ successRecord.dateFormatted }>
 						<td>{successRecord.dateFormatted}</td>
 						<td>{successRecord.successText}</td>
@@ -52,9 +59,19 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, {}> 
         </table>;
 	}
 
+	onSave() {
+		var arr = this.state.successRecords;
+		arr.push({ dateFormatted: '2019-01-01: ' + this.state.num, successText: 'Success!' });
+		console.log(arr);
+		this.setState({
+			successRecords: arr,
+			num: this.state.num+1
+				});
+	}
+
 	private renderSaveButton() {
 		return <p className='clearfix text-center'>
-			<button className='btn btn-default'>Save</button>
+			<button className='btn btn-default' onClick={() => this.onSave()}>Save</button>
 		</p>;
 	}
 
