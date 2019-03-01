@@ -10,12 +10,12 @@ type SuccessInTwoMinutesProps =
 	& typeof SuccessRecordsState.actionCreators      // ... plus action creators we've requested
     & RouteComponentProps<{ startDateIndex: string }>; // ... plus incoming routing parameters
 
-class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { successRecords: SuccessRecordsState.SuccessRecord[], num: number}> {
+class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { successRecords: SuccessRecordsState.SuccessRecord[], text: string}> {
 	constructor(ps: SuccessInTwoMinutesProps) {
 		super();
 		this.state = {
 			successRecords: ps.successRecords,
-			num: 0
+			text: ''
 		};
 	}
     componentWillMount() {
@@ -36,7 +36,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 			<p>This component demonstrates fetching data from the server and working with URL parameters.</p>
 			{this.renderForecastsTable()}
 			{this.renderPagination()}
-			{this.renderSaveButton()}
+			{this.renderInputField()}
         </div>;
     }
 
@@ -60,17 +60,30 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 	}
 
 	onSave() {
+		var currentdate = new Date();
+		var datetime = currentdate.getDate() + "/"
+			+ (currentdate.getMonth() + 1) + "/"
+			+ currentdate.getFullYear() + " "
+			+ currentdate.getHours() + ":"
+			+ currentdate.getMinutes() + ":"
+			+ currentdate.getSeconds();
 		var arr = this.state.successRecords;
-		arr.push({ dateFormatted: '2019-01-01: ' + this.state.num, successText: 'Success!' });
+		arr.push({ dateFormatted: datetime, successText: this.state.text });
 		console.log(arr);
 		this.setState({
-			successRecords: arr,
-			num: this.state.num+1
+			successRecords: arr
 				});
 	}
 
-	private renderSaveButton() {
+	onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+		this.setState({
+			text: event.target.value
+		});
+	}
+
+	private renderInputField() {
 		return <p className='clearfix text-center'>
+			<input type="text" onChange={(event) => this.onInputChange(event)} />
 			<button className='btn btn-default' onClick={() => this.onSave()}>Save</button>
 		</p>;
 	}
