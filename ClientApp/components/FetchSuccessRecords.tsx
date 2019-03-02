@@ -61,9 +61,9 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 
 	onSave() {
 		var currentdate = new Date();
-		var datetime = currentdate.getDate() + "/"
+		var datetime = currentdate.getFullYear() + "/"
 			+ (currentdate.getMonth() + 1) + "/"
-			+ currentdate.getFullYear() + " "
+			+ currentdate.getDate() + " "
 			+ currentdate.getHours() + ":"
 			+ currentdate.getMinutes() + ":"
 			+ currentdate.getSeconds();
@@ -71,8 +71,9 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 		arr.push({ dateFormatted: datetime, successText: this.state.text });
 		console.log(arr);
 		this.setState({
-			successRecords: arr
-				});
+			successRecords: arr,
+			text: ''
+		});
 	}
 
 	onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -83,7 +84,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 
 	private renderInputField() {
 		return <p className='clearfix text-center'>
-			<input type="text" onChange={(event) => this.onInputChange(event)} />
+			<input type="text" onChange={(event) => this.onInputChange(event)} value={this.state.text} />
 			<button className='btn btn-default' onClick={() => this.onSave()}>Save</button>
 		</p>;
 	}
