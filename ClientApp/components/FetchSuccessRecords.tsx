@@ -33,7 +33,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
     public render() {
         return <div>
             <h1>Success in 2 minutes</h1>
-			<p>This component demonstrates fetching data from the server and working with URL parameters.</p>
+			<p>This component contains records list.</p>
 			{this.renderForecastsTable()}
 			{this.renderPagination()}
 			{this.renderInputField()}
