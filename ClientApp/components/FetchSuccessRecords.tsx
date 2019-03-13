@@ -60,6 +60,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 	}
 
 	onSave() {
+		if (this.state.text === '') return;
 		var currentdate = new Date();
 		var datetime = currentdate.getFullYear() + "/"
 			+ (currentdate.getMonth() + 1) + "/"
