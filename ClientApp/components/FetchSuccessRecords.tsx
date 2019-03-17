@@ -10,10 +10,11 @@ type SuccessInTwoMinutesProps =
 	& typeof SuccessRecordsState.actionCreators      // ... plus action creators we've requested
     & RouteComponentProps<{ startDateIndex: string }>; // ... plus incoming routing parameters
 
-class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { text: string }> {
+class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { successRecords: SuccessRecordsState.SuccessRecord[], text: string }> {
 	constructor(ps: SuccessInTwoMinutesProps) {
 		super();
 		this.state = {
+			successRecords: ps.successRecords,
 			text: ''
 		};
 	}
@@ -59,7 +60,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 	}
 
 	onSave() {
-		if (this.props.text === '') return;
+		if (this.state.text === '') return;
 		var currentdate = new Date();
 		var datetime = currentdate.getFullYear() + "/"
 			+ (currentdate.getMonth() + 1) + "/"
@@ -67,10 +68,11 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 			+ currentdate.getHours() + ":"
 			+ currentdate.getMinutes() + ":"
 			+ currentdate.getSeconds();
-		var arr = this.props.successRecords;
-		arr.push({ dateFormatted: datetime, successText: this.props.text });
+		var arr = this.state.successRecords;
+		arr.push({ dateFormatted: datetime, successText: this.state.text });
 
 		this.setState({
+			successRecords: arr,
 			text: ''
 		});
 	}
@@ -83,7 +85,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 
 	private renderInputField() {
 		return <p className='clearfix text-center'>
-			<input type="text" onChange={(event) => this.onInputChange(event)} value={this.props.text} />
+			<input type="text" onChange={(event) => this.onInputChange(event)} value={this.state.text} />
 			<button className='btn btn-default' onClick={() => this.onSave()}>Save</button>
 		</p>;
 	}
