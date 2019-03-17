@@ -8,7 +8,8 @@ import { AppThunkAction } from './';
 export interface SuccessRecordsState {
     isLoading: boolean;
     startDateIndex?: number;
-    successRecords: SuccessRecord[];
+	successRecords: SuccessRecord[];
+	text: string;
 }
 
 export interface SuccessRecord {
@@ -40,7 +41,7 @@ type KnownAction = RequestSuccessesAction | ReceiveSuccessesAction;
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-    requestSucessRecords: (startDateIndex: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    requestSuccessRecords: (startDateIndex: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
 		// Only load data if it's something we don't already have (and are not already loading)
 		if (startDateIndex !== getState().successes.startDateIndex) {
 			let fetchTask = fetch(`api/SampleData/SuccessRecords?startDateIndex=${ startDateIndex }`)
@@ -58,7 +59,7 @@ export const actionCreators = {
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-const unloadedState: SuccessRecordsState = { successRecords: [], isLoading: false };
+const unloadedState: SuccessRecordsState = { successRecords: [], isLoading: false, text: '' };
 
 export const reducer: Reducer<SuccessRecordsState> = (state: SuccessRecordsState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
@@ -67,16 +68,18 @@ export const reducer: Reducer<SuccessRecordsState> = (state: SuccessRecordsState
             return {
                 startDateIndex: action.startDateIndex,
 				successRecords: state.successRecords,
-                isLoading: true
+				isLoading: true,
+				text: ''
             };
         case 'RECEIVE_SUCCESSES':
             // Only accept the incoming data if it matches the most recent request. This ensures we correctly
             // handle out-of-order responses.
-            if (action.startDateIndex === state.startDateIndex) {
+			if (action.startDateIndex === state.startDateIndex) {
                 return {
                     startDateIndex: action.startDateIndex,
 					successRecords: action.successes,
-                    isLoading: false
+					isLoading: false,
+					text: ''
                 };
             }
             break;

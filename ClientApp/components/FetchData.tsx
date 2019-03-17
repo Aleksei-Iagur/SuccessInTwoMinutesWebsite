@@ -20,7 +20,7 @@ class FetchData extends React.Component<WeatherForecastProps, {}> {
     componentWillReceiveProps(nextProps: WeatherForecastProps) {
         // This method runs when incoming props (e.g., route params) change
         let startDateIndex = parseInt(nextProps.match.params.startDateIndex) || 0;
-        this.props.requestWeatherForecasts(startDateIndex);
+		this.props.requestWeatherForecasts(startDateIndex);
     }
 
     public render() {

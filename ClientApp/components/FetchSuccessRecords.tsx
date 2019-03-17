@@ -10,24 +10,23 @@ type SuccessInTwoMinutesProps =
 	& typeof SuccessRecordsState.actionCreators      // ... plus action creators we've requested
     & RouteComponentProps<{ startDateIndex: string }>; // ... plus incoming routing parameters
 
-class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { successRecords: SuccessRecordsState.SuccessRecord[], text: string}> {
+class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { text: string }> {
 	constructor(ps: SuccessInTwoMinutesProps) {
 		super();
 		this.state = {
-			successRecords: ps.successRecords,
 			text: ''
 		};
 	}
     componentWillMount() {
         // This method runs when the component is first added to the page
 		let startDateIndex = parseInt(this.props.match.params.startDateIndex) || 0;
-		this.props.requestSucessRecords(startDateIndex);
+		this.props.requestSuccessRecords(startDateIndex);
     }
 
 	componentWillReceiveProps(nextProps: SuccessInTwoMinutesProps) {
         // This method runs when incoming props (e.g., route params) change
         let startDateIndex = parseInt(nextProps.match.params.startDateIndex) || 0;
-        this.props.requestSucessRecords(startDateIndex);
+		this.props.requestSuccessRecords(startDateIndex);
     }
 
     public render() {
@@ -49,7 +48,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
                 </tr>
             </thead>
 			<tbody>
-				{this.state.successRecords.map(successRecord =>
+				{this.props.successRecords.map(successRecord =>
                 <tr key={ successRecord.dateFormatted }>
 						<td>{successRecord.dateFormatted}</td>
 						<td>{successRecord.successText}</td>
@@ -60,7 +59,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 	}
 
 	onSave() {
-		if (this.state.text === '') return;
+		if (this.props.text === '') return;
 		var currentdate = new Date();
 		var datetime = currentdate.getFullYear() + "/"
 			+ (currentdate.getMonth() + 1) + "/"
@@ -68,11 +67,10 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 			+ currentdate.getHours() + ":"
 			+ currentdate.getMinutes() + ":"
 			+ currentdate.getSeconds();
-		var arr = this.state.successRecords;
-		arr.push({ dateFormatted: datetime, successText: this.state.text });
-		console.log(arr);
+		var arr = this.props.successRecords;
+		arr.push({ dateFormatted: datetime, successText: this.props.text });
+
 		this.setState({
-			successRecords: arr,
 			text: ''
 		});
 	}
@@ -85,7 +83,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 
 	private renderInputField() {
 		return <p className='clearfix text-center'>
-			<input type="text" onChange={(event) => this.onInputChange(event)} value={this.state.text} />
+			<input type="text" onChange={(event) => this.onInputChange(event)} value={this.props.text} />
 			<button className='btn btn-default' onClick={() => this.onSave()}>Save</button>
 		</p>;
 	}
