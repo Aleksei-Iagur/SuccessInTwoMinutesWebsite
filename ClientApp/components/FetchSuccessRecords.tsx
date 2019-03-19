@@ -18,56 +18,60 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 			text: ''
 		};
 	}
-    componentWillMount() {
-        // This method runs when the component is first added to the page
+	componentWillMount() {
+		// This method runs when the component is first added to the page
 		let startDateIndex = parseInt(this.props.match.params.startDateIndex) || 0;
 		this.props.requestSuccessRecords(startDateIndex);
-    }
+	}
 
 	componentWillReceiveProps(nextProps: SuccessInTwoMinutesProps) {
-        // This method runs when incoming props (e.g., route params) change
-        let startDateIndex = parseInt(nextProps.match.params.startDateIndex) || 0;
+		// This method runs when incoming props (e.g., route params) change
+		let startDateIndex = parseInt(nextProps.match.params.startDateIndex) || 0;
 		this.props.requestSuccessRecords(startDateIndex);
-    }
+	}
 
-    public render() {
-        return <div>
-            <h1>Success in 2 minutes</h1>
+	public render() {
+		return <div>
+			<h1>Success in 2 minutes</h1>
 			<p>This component contains records list.</p>
 			{this.renderForecastsTable()}
 			{this.renderPagination()}
 			{this.renderInputField()}
-        </div>;
-    }
+		</div>;
+	}
 
-    private renderForecastsTable() {
-        return <table className='table'>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Text</th>
-                </tr>
-            </thead>
+	private renderForecastsTable() {
+		return <table className='table'>
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>Text</th>
+				</tr>
+			</thead>
 			<tbody>
 				{this.props.successRecords.map(successRecord =>
-                <tr key={ successRecord.dateFormatted }>
+					<tr>
 						<td>{successRecord.dateFormatted}</td>
 						<td>{successRecord.successText}</td>
-                </tr>
-            )}
-            </tbody>
-        </table>;
+					</tr>
+				)}
+			</tbody>
+		</table>;
+	}
+
+	private getDate() {
+		var currentdate = new Date();
+		var day = currentdate.getDate() < 10 ? "0" + currentdate.getDate() : currentdate.getDate();
+		var currentMonth = currentdate.getMonth() + 1;
+		var month = currentMonth < 10 ? "0" + currentMonth : currentMonth;
+
+		return day + "." + month + "." + currentdate.getFullYear();
 	}
 
 	onSave() {
 		if (this.state.text === '') return;
-		var currentdate = new Date();
-		var datetime = currentdate.getFullYear() + "/"
-			+ (currentdate.getMonth() + 1) + "/"
-			+ currentdate.getDate() + " "
-			+ currentdate.getHours() + ":"
-			+ currentdate.getMinutes() + ":"
-			+ currentdate.getSeconds();
+
+		var datetime = this.getDate();
 		var arr = this.state.successRecords;
 		arr.push({ dateFormatted: datetime, successText: this.state.text });
 
@@ -75,6 +79,18 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 			successRecords: arr,
 			text: ''
 		});
+
+		fetch('api/SampleData/AddSuccessRecord', {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				DateFormatted: datetime,
+				SuccessText: this.state.text,
+			})
+		})
 	}
 
 	onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
