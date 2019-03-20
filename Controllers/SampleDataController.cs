@@ -38,8 +38,8 @@ namespace SuccessInTwoMinutes.Controllers
 		public IEnumerable<SuccessRecord> SuccessRecords(int startDateIndex)
 		{
 			const int minimumDatesRangeInDays = 5;
-			var since = DateTime.UtcNow.AddDays(startDateIndex);
-			var until = DateTime.UtcNow.AddDays(startDateIndex + minimumDatesRangeInDays);
+			var since = DateTime.UtcNow.Date.AddDays(startDateIndex);
+			var until = DateTime.UtcNow.Date.AddDays(startDateIndex + minimumDatesRangeInDays - 1);
 			var result = _successRepository.GetRecords(since, until);
 
 			return result;
@@ -48,7 +48,7 @@ namespace SuccessInTwoMinutes.Controllers
 		[HttpPost]
 		public IActionResult AddSuccessRecord([FromBody]SuccessRecord success)
 		{
-			_successRecords.Add(success);
+			_successRepository.AddRecord(success);
 			return StatusCode(200);
 		}
 

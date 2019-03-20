@@ -27,7 +27,8 @@ namespace SuccessInTwoMinutesWebsite.BusinessLogic
 			}
 		}
 
-		public static SuccessRepository Instance {
+		public static SuccessRepository Instance
+		{
 			get
 			{
 				if (_instance == null)
@@ -47,8 +48,17 @@ namespace SuccessInTwoMinutesWebsite.BusinessLogic
 
 		public SuccessRecord[] GetRecords(DateTime since, DateTime until)
 		{
-			var result = _storage.Where(rec => DateTime.Parse(rec.DateFormatted) >= since && DateTime.Parse(rec.DateFormatted) <= until).ToArray();
+			var result = _storage
+				.Where(rec => DateTime.Parse(rec.DateFormatted) >= since && DateTime.Parse(rec.DateFormatted) <= until)
+				.OrderBy(rec => rec.DateFormatted)
+				.ToArray();
+
 			return result;
+		}
+
+		public void AddRecord(SuccessRecord record)
+		{
+			_storage.Add(record);
 		}
 
 		private static string[] Summaries = new[]
