@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using SuccessInTwoMinutesWebsite.BusinessLogic;
 
 namespace SuccessInTwoMinutes.Controllers
 {
@@ -9,19 +10,11 @@ namespace SuccessInTwoMinutes.Controllers
     public class SampleDataController : Controller
     {
 		private static List<SuccessRecord> _successRecords = new List<SuccessRecord>();
+		ISuccessRepository _successRepository;
 
 		public SampleDataController()
 		{
-			var rng = new Random();
-			for (var i = 0; i < 100; i++)
-			{
-				_successRecords.Add(
-					new SuccessRecord
-					{
-						DateFormatted = DateTime.Now.AddDays(-50 + i).ToString("d"),
-						SuccessText = Summaries[rng.Next(Summaries.Length)]
-					});
-			}
+			_successRepository = SuccessRepository.Instance;
 		}
 
         private static string[] Summaries = new[]
@@ -44,7 +37,11 @@ namespace SuccessInTwoMinutes.Controllers
 		[HttpGet]
 		public IEnumerable<SuccessRecord> SuccessRecords(int startDateIndex)
 		{
-			var result = _successRecords.Where(x => GoodDate(startDateIndex, x));
+			const int minimumDatesRangeInDays = 5;
+			var since = DateTime.UtcNow.AddDays(startDateIndex);
+			var until = DateTime.UtcNow.AddDays(startDateIndex + minimumDatesRangeInDays);
+			var result = _successRepository.GetRecords(since, until);
+
 			return result;
 		}
 
@@ -53,11 +50,6 @@ namespace SuccessInTwoMinutes.Controllers
 		{
 			_successRecords.Add(success);
 			return StatusCode(200);
-		}
-
-		private static bool GoodDate(int startDateIndex, SuccessRecord x)
-		{
-			return DateTime.Parse(x.DateFormatted) > DateTime.Now.AddDays(startDateIndex) && DateTime.Parse(x.DateFormatted) < DateTime.Now.AddDays(5 + startDateIndex);
 		}
 
 		public class WeatherForecast

@@ -46,7 +46,7 @@ export const actionCreators = {
 		if (startDateIndex !== getState().successes.startDateIndex) {
 			let fetchTask = fetch(`api/SampleData/SuccessRecords?startDateIndex=${ startDateIndex }`)
                 .then(response => response.json() as Promise<SuccessRecord[]>)
-                .then(data => {
+				.then(data => {
                     dispatch({ type: 'RECEIVE_SUCCESSES', startDateIndex: startDateIndex, successes: data });
                 });
 
