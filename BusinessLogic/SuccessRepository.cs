@@ -22,7 +22,7 @@ namespace SuccessInTwoMinutesWebsite.BusinessLogic
 					new SuccessRecord
 					{
 						DateFormatted = DateTime.Now.AddDays(-50 + i).ToString("d"),
-						SuccessText = Summaries[rng.Next(Summaries.Length)]
+						SuccessText = Successes[rng.Next(Successes.Length)]
 					});
 			}
 		}
@@ -61,9 +61,9 @@ namespace SuccessInTwoMinutesWebsite.BusinessLogic
 			_storage.Add(record);
 		}
 
-		private static string[] Summaries = new[]
+		private static string[] Successes = new[]
 		{
-			"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+			"Baked cookies", "Did push-ups", "Ran a marathon", "Made somebody laugh", "Helped somebody", "Made some changes to SuccessInTwoMinutes", "Solved an algorithm puzzle", "Phoned a friend", "Read 10 pages in a book", "Wrote 10 sentences in a blog"
 		};
 	}
 }

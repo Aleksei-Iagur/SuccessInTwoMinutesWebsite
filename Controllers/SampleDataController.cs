@@ -17,10 +17,10 @@ namespace SuccessInTwoMinutes.Controllers
 			_successRepository = SuccessRepository.Instance;
 		}
 
-        private static string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+		private static string[] Summaries = new[]
+		{
+			"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+		};
 
 		[HttpGet]
 		public IEnumerable<WeatherForecast> WeatherForecasts(int startDateIndex)
