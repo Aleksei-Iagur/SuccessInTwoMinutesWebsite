@@ -1,11 +1,9 @@
-import * as WeatherForecasts from './WeatherForecasts';
 import * as Counter from './Counter';
 import * as Successintwominutes from './Successes';
 
 // The top-level state object
 export interface ApplicationState {
 	counter: Counter.CounterState;
-	weatherForecasts: WeatherForecasts.WeatherForecastsState;
 	successes: Successintwominutes.SuccessRecordsState;
 }
 
@@ -14,7 +12,6 @@ export interface ApplicationState {
 // acts on the corresponding ApplicationState property type.
 export const reducers = {
 	counter: Counter.reducer,
-	weatherForecasts: WeatherForecasts.reducer,
 	successes: Successintwominutes.reducer
 };
 
