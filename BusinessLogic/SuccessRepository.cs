@@ -60,6 +60,10 @@ namespace SuccessInTwoMinutesWebsite.BusinessLogic
 		{
 			_storage.Add(record);
 		}
+		public void RemoveRecord(SuccessRecord record)
+		{
+			_storage.RemoveAll(r => r.DateFormatted == record.DateFormatted && r.SuccessText == record.SuccessText);
+		}
 
 		private static string[] Successes = new[]
 		{

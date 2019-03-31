@@ -32,7 +32,14 @@ namespace SuccessInTwoMinutes.Controllers
 			_successRepository.AddRecord(success);
 			return StatusCode(200);
 		}
-    }
+
+		[HttpPost]
+		public IActionResult RemoveSuccessRecord([FromBody]SuccessRecord record)
+		{
+			_successRepository.RemoveRecord(record);
+			return StatusCode(200);
+		}
+	}
 
 	public class SuccessRecord
 	{

@@ -8,5 +8,7 @@ namespace SuccessInTwoMinutesWebsite.BusinessLogic
 		SuccessRecord[] GetRecords(DateTime since, DateTime until);
 
 		void AddRecord(SuccessRecord record);
+
+		void RemoveRecord(SuccessRecord record);
 	}
 }

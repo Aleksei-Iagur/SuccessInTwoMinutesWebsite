@@ -53,6 +53,9 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 					<tr>
 						<td>{successRecord.dateFormatted}</td>
 						<td>{successRecord.successText}</td>
+						<td>
+							<button className='btn btn-default' onClick={() => this.OnRemove(successRecord)}>Remove</button>
+						</td>
 					</tr>
 				)}
 			</tbody>
@@ -89,6 +92,20 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 			body: JSON.stringify({
 				DateFormatted: datetime,
 				SuccessText: this.state.text,
+			})
+		})
+	}
+
+	OnRemove(record: SuccessRecordsState.SuccessRecord) {
+		fetch('api/SampleData/RemoveSuccessRecord', {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				DateFormatted: record.dateFormatted,
+				SuccessText: record.successText,
 			})
 		})
 	}
