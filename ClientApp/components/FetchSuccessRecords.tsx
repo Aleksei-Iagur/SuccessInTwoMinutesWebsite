@@ -28,6 +28,10 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 		// This method runs when incoming props (e.g., route params) change
 		let startDateIndex = parseInt(nextProps.match.params.startDateIndex) || 0;
 		this.props.requestSuccessRecords(startDateIndex);
+		this.state = {
+			successRecords: nextProps.successRecords,
+			text: ''
+		};
 	}
 
 	public render() {
@@ -49,12 +53,12 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 				</tr>
 			</thead>
 			<tbody>
-				{this.props.successRecords.map(successRecord =>
+				{this.state.successRecords.map(successRecord =>
 					<tr>
 						<td>{successRecord.dateFormatted}</td>
 						<td>{successRecord.successText}</td>
 						<td>
-							<button className='btn btn-default' onClick={() => this.OnRemove(successRecord)}>Remove</button>
+							<button className='btn btn-default' onClick={() => this.onRemove(successRecord)}>Remove</button>
 						</td>
 					</tr>
 				)}
@@ -96,7 +100,16 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 		})
 	}
 
-	OnRemove(record: SuccessRecordsState.SuccessRecord) {
+	onRemove(record: SuccessRecordsState.SuccessRecord) {
+		var arr = this.state.successRecords;
+		var index = arr.indexOf(record);
+		arr.splice(index, 1);
+
+		this.setState({
+			successRecords: arr,
+			text: ''
+		});
+
 		fetch('api/SampleData/RemoveSuccessRecord', {
 			method: 'POST',
 			headers: {
