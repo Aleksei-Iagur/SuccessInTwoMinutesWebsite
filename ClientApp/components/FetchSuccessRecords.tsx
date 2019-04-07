@@ -53,7 +53,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 				</tr>
 			</thead>
 			<tbody>
-				{this.state.successRecords.map(successRecord =>
+				{this.props.successRecords.map(successRecord =>
 					<tr>
 						<td>{successRecord.dateFormatted}</td>
 						<td>{successRecord.successText}</td>
@@ -79,25 +79,8 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 		if (this.state.text === '') return;
 
 		var datetime = this.getDate();
-		var arr = this.state.successRecords;
-		arr.push({ dateFormatted: datetime, successText: this.state.text });
-
-		this.setState({
-			successRecords: arr,
-			text: ''
-		});
-
-		fetch('api/SampleData/AddSuccessRecord', {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				DateFormatted: datetime,
-				SuccessText: this.state.text,
-			})
-		})
+		var record = { dateFormatted: datetime, successText: this.state.text };
+		this.props.addRecord(record);
 	}
 
 	onRemove(record: SuccessRecordsState.SuccessRecord) {

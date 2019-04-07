@@ -27,14 +27,19 @@ interface RequestSuccessesAction {
 }
 
 interface ReceiveSuccessesAction {
-    type: 'RECEIVE_SUCCESSES';
-    startDateIndex: number;
-    successes: SuccessRecord[];
+	type: 'RECEIVE_SUCCESSES';
+	startDateIndex: number;
+	successes: SuccessRecord[];
+}
+
+interface AddSuccessAction {
+	type: 'ADD_SUCCESS';
+	record: SuccessRecord;
 }
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-type KnownAction = RequestSuccessesAction | ReceiveSuccessesAction;
+type KnownAction = RequestSuccessesAction | ReceiveSuccessesAction | AddSuccessAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -53,7 +58,21 @@ export const actionCreators = {
             addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
             dispatch({ type: 'REQUEST_SUCCESSES', startDateIndex: startDateIndex });
         }
-    }
+	},
+	addRecord: (record: SuccessRecord): AppThunkAction<KnownAction> => (dispatch, getState) => {
+		let fetchTask =
+			fetch('api/SampleData/AddSuccessRecord', {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(record)
+			});
+
+		addTask(fetchTask);
+		dispatch({ type: 'ADD_SUCCESS', record });
+	}
 };
 
 // ----------------
@@ -82,7 +101,14 @@ export const reducer: Reducer<SuccessRecordsState> = (state: SuccessRecordsState
 					text: ''
                 };
             }
-            break;
+			break;
+		case 'ADD_SUCCESS':
+			state.successRecords.push(action.record);
+			return {
+				successRecords: state.successRecords,
+				isLoading: true,
+				text: ''
+			};
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;
