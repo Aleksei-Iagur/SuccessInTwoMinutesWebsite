@@ -93,17 +93,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 			text: ''
 		});
 
-		fetch('api/SampleData/RemoveSuccessRecord', {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				DateFormatted: record.dateFormatted,
-				SuccessText: record.successText,
-			})
-		})
+		this.props.removeRecord(record);
 	}
 
 	onInputChange(event: React.ChangeEvent<HTMLInputElement>) {

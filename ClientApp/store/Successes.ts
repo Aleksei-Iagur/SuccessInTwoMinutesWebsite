@@ -37,9 +37,14 @@ interface AddSuccessAction {
 	record: SuccessRecord;
 }
 
+interface RemoveSuccessAction {
+	type: 'REMOVE_SUCCESS';
+	record: SuccessRecord;
+}
+
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-type KnownAction = RequestSuccessesAction | ReceiveSuccessesAction | AddSuccessAction;
+type KnownAction = RequestSuccessesAction | ReceiveSuccessesAction | AddSuccessAction | RemoveSuccessAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -72,6 +77,19 @@ export const actionCreators = {
 
 		addTask(fetchTask);
 		dispatch({ type: 'ADD_SUCCESS', record });
+	},
+	removeRecord: (record: SuccessRecord): AppThunkAction<KnownAction> => (dispatch, getState) => {
+		let fetchTask = fetch('api/SampleData/RemoveSuccessRecord', {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(record)
+		});
+
+		addTask(fetchTask);
+		dispatch({ type: 'REMOVE_SUCCESS', record });
 	}
 };
 
@@ -104,6 +122,14 @@ export const reducer: Reducer<SuccessRecordsState> = (state: SuccessRecordsState
 			break;
 		case 'ADD_SUCCESS':
 			state.successRecords.push(action.record);
+			return {
+				successRecords: state.successRecords,
+				isLoading: true,
+				text: ''
+			};
+		case 'REMOVE_SUCCESS':
+			var index = state.successRecords.indexOf(action.record);
+			state.successRecords.splice(index, 1);
 			return {
 				successRecords: state.successRecords,
 				isLoading: true,
