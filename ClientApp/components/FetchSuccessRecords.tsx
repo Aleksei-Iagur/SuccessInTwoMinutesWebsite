@@ -110,8 +110,8 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { su
 	}
 
     private renderPagination() {
-        let prevStartDateIndex = (this.props.startDateIndex || 0) - 5;
-        let nextStartDateIndex = (this.props.startDateIndex || 0) + 5;
+        let prevStartDateIndex = (this.props.startDateIndex || 0) - 10;
+        let nextStartDateIndex = (this.props.startDateIndex || 0) + 10;
 
         return <p className='clearfix text-center'>
 			<Link className='btn btn-default pull-left' to={ `/fetchsuccessrecords/${ prevStartDateIndex }` }>Previous</Link>

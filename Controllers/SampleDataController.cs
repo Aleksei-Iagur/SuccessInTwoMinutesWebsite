@@ -18,7 +18,7 @@ namespace SuccessInTwoMinutes.Controllers
 		[HttpGet]
 		public IEnumerable<SuccessRecord> SuccessRecords(int startDateIndex)
 		{
-			const int minimumDatesRangeInDays = 5;
+			const int minimumDatesRangeInDays = 10;
 			var since = DateTime.UtcNow.Date.AddDays(startDateIndex);
 			var until = DateTime.UtcNow.Date.AddDays(startDateIndex + minimumDatesRangeInDays - 1);
 			var result = _successRepository.GetRecords(since, until);
