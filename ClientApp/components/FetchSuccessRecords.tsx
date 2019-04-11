@@ -10,11 +10,10 @@ type SuccessInTwoMinutesProps =
 	& typeof SuccessRecordsState.actionCreators      // ... plus action creators we've requested
     & RouteComponentProps<{ startDateIndex: string }>; // ... plus incoming routing parameters
 
-class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { successRecords: SuccessRecordsState.SuccessRecord[], text: string }> {
+class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { text: string }> {
 	constructor(ps: SuccessInTwoMinutesProps) {
 		super();
 		this.state = {
-			successRecords: ps.successRecords,
 			text: ''
 		};
 	}
