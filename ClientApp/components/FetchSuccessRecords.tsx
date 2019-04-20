@@ -3,6 +3,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
 import * as SuccessRecordsState from '../store/Successes';
+import * as ReactDOM from 'react-dom';
 
 // At runtime, Redux will merge together...
 type SuccessInTwoMinutesProps =
@@ -36,6 +37,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 			{this.renderForecastsTable()}
 			{this.renderPagination()}
 			{this.renderInputField()}
+			{this.renderSpoiler()}
 		</div>;
 	}
 
@@ -92,6 +94,15 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 			<input type="text" onChange={(event) => this.onInputChange(event)} value={this.state.text} />
 			<button className='btn btn-default' onClick={() => this.onSave()}>Save</button>
 		</p>;
+	}
+
+	private renderSpoiler() {
+		return <div>
+			<button>SPOILER</button>
+			<div className='content'>
+				<p>HERE WILL BE A CONTROL TO MEASURE DIFFERENT GAUGES: HUNGER, HEAT, HEALTH, PRODUCTIVITY, ETC. </p>
+			</div>
+		</div>
 	}
 
     private renderPagination() {
