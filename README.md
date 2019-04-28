@@ -1,1 +1,1 @@
-# SuccessInTwoMinutesWebsite
+# Pump up your success with only 2 minutes a day
