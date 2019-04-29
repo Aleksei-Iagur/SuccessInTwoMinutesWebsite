@@ -9,12 +9,20 @@ export interface SuccessRecordsState {
     isLoading: boolean;
     startDateIndex?: number;
 	successRecords: SuccessRecord[];
+	stateRecords: StateRecord[];
 	text: string;
 }
 
 export interface SuccessRecord {
-    dateFormatted: string;
-    successText: string;
+	dateFormatted: string;
+	successText: string;
+}
+
+export interface StateRecord {
+	happiness: number;
+	mood: number;
+	hunger: number;
+	energy: number;
 }
 
 // -----------------
@@ -96,7 +104,7 @@ export const actionCreators = {
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-const unloadedState: SuccessRecordsState = { successRecords: [], isLoading: false, text: '' };
+const unloadedState: SuccessRecordsState = { successRecords: [], stateRecords: [], isLoading: false, text: '' };
 
 export const reducer: Reducer<SuccessRecordsState> = (state: SuccessRecordsState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
@@ -105,6 +113,7 @@ export const reducer: Reducer<SuccessRecordsState> = (state: SuccessRecordsState
             return {
                 startDateIndex: action.startDateIndex,
 				successRecords: state.successRecords,
+				stateRecords: state.stateRecords,
 				isLoading: true,
 				text: ''
             };
@@ -115,6 +124,7 @@ export const reducer: Reducer<SuccessRecordsState> = (state: SuccessRecordsState
                 return {
                     startDateIndex: action.startDateIndex,
 					successRecords: action.successes,
+					stateRecords: state.stateRecords,
 					isLoading: false,
 					text: ''
                 };
@@ -124,6 +134,7 @@ export const reducer: Reducer<SuccessRecordsState> = (state: SuccessRecordsState
 			state.successRecords.push(action.record);
 			return {
 				successRecords: state.successRecords,
+				stateRecords: state.stateRecords,
 				isLoading: true,
 				text: ''
 			};
@@ -132,6 +143,7 @@ export const reducer: Reducer<SuccessRecordsState> = (state: SuccessRecordsState
 			state.successRecords.splice(index, 1);
 			return {
 				successRecords: state.successRecords,
+				stateRecords: state.stateRecords,
 				isLoading: true,
 				text: ''
 			};

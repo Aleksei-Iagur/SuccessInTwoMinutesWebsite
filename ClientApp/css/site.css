@@ -63,4 +63,11 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+	.orient-vertical {
+		writing-mode: bt-lr; /* IE */
+		-webkit-appearance: slider-vertical; /* WebKit */
+		width: 8px;
+		height: 120px;
+		padding: 5px;
+	}
 }

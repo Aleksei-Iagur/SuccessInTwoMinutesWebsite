@@ -9,13 +9,16 @@ import * as ReactDOM from 'react-dom';
 type SuccessInTwoMinutesProps =
 	SuccessRecordsState.SuccessRecordsState        // ... state we've requested from the Redux store
 	& typeof SuccessRecordsState.actionCreators      // ... plus action creators we've requested
-    & RouteComponentProps<{ startDateIndex: string }>; // ... plus incoming routing parameters
+	& RouteComponentProps<{ startDateIndex: string }>; // ... plus incoming routing parameters
 
-class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { text: string }> {
+type HealthState = { happiness: number, energy: number, mood: number, hunger: number }
+
+class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { text: string, healthState: HealthState }> {
 	constructor(ps: SuccessInTwoMinutesProps) {
 		super();
 		this.state = {
-			text: ''
+			text: '',
+			healthState: { happiness: 5, energy: 5, mood: 5, hunger: 5 }
 		};
 	}
 	componentWillMount() {
@@ -83,25 +86,102 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 		});
 	}
 
-	onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+	onSuccessTextInput(event: React.ChangeEvent<HTMLInputElement>) {
 		this.setState({
 			text: event.target.value
 		});
 	}
 
+	onHappinessInput(event: React.ChangeEvent<HTMLInputElement>) {
+		var currentState = this.state.healthState;
+		currentState.happiness = parseInt(event.target.value);
+		this.setState({
+			healthState: currentState
+		});
+	}
+
+	onEnergyInput(event: React.ChangeEvent<HTMLInputElement>) {
+		var currentState = this.state.healthState;
+		currentState.energy = parseInt(event.target.value);
+		this.setState({
+			healthState: currentState
+		});
+	}
+
+	onMoodInput(event: React.ChangeEvent<HTMLInputElement>) {
+		var currentState = this.state.healthState;
+		currentState.mood = parseInt(event.target.value);
+		this.setState({
+			healthState: currentState
+		});
+	}
+
+	onHungerInput(event: React.ChangeEvent<HTMLInputElement>) {
+		var currentState = this.state.healthState;
+		currentState.hunger = parseInt(event.target.value);
+		this.setState({
+			healthState: currentState
+		});
+	}
+
 	private renderInputField() {
 		return <p className='clearfix text-center'>
-			<input type="text" onChange={(event) => this.onInputChange(event)} value={this.state.text} />
+			<input type="text" onChange={(event) => this.onSuccessTextInput(event)} value={this.state.text} />
 			<button className='btn btn-default' onClick={() => this.onSave()}>Save</button>
 		</p>;
 	}
 
 	private renderSpoiler() {
 		return <div>
-			<button>SPOILER</button>
-			<div className='content'>
-				<p>HERE WILL BE A CONTROL TO MEASURE DIFFERENT GAUGES: HUNGER, HEAT, HEALTH, PRODUCTIVITY, ETC. </p>
+			<div>
+				<input
+					type="range"
+					className="volume-bar orient-vertical"
+					value={this.state.healthState.happiness || 0}
+					min="0"
+					max="10"
+					step="1"
+					onChange={(event) => this.onHappinessInput(event)}
+				/>
+				<div className="current-happiness">{this.state.healthState.happiness}</div>
 			</div>
+			<div>
+				<input
+					type="range"
+					className="volume-bar orient-vertical"
+					value={this.state.healthState.energy || 0}
+					min="0"
+					max="10"
+					step="1"
+					onChange={(event) => this.onEnergyInput(event)}
+				/>
+				<div className="current-energy">{this.state.healthState.energy}</div>
+			</div>
+			<div>
+				<input
+					type="range"
+					className="volume-bar orient-vertical"
+					value={this.state.healthState.mood || 0}
+					min="0"
+					max="10"
+					step="1"
+					onChange={(event) => this.onMoodInput(event)}
+				/>
+				<div className="current-mood">{this.state.healthState.mood}</div>
+			</div>
+			<div>
+				<input
+					type="range"
+					className="volume-bar orient-vertical"
+					value={this.state.healthState.hunger || 0}
+					min="0"
+					max="10"
+					step="1"
+					onChange={(event) => this.onHungerInput(event)}
+				/>
+				<div className="current-hunger">{this.state.healthState.hunger}</div>
+			</div>
+
 		</div>
 	}
 
