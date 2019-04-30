@@ -41,6 +41,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 			{this.renderPagination()}
 			{this.renderInputField()}
 			{this.renderSpoiler()}
+			{this.shrinkSliders()}
 		</div>;
 	}
 
@@ -131,9 +132,15 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 		</p>;
 	}
 
+	private shrinkSliders() {
+		/*var items = document.getElementsByClassName("orient-vertical");
+		for (var i = 0; i < items.length; i++) {
+			items[i].setAttribute("width", "100px");
+		}*/
+	}
 	private renderSpoiler() {
 		return <div>
-			<div>
+			<div className="display-horizontally">
 				<input
 					type="range"
 					className="volume-bar orient-vertical"
@@ -145,7 +152,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 				/>
 				<div className="current-happiness">{this.state.healthState.happiness}</div>
 			</div>
-			<div>
+			<div className="display-horizontally">
 				<input
 					type="range"
 					className="volume-bar orient-vertical"
@@ -157,7 +164,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 				/>
 				<div className="current-energy">{this.state.healthState.energy}</div>
 			</div>
-			<div>
+			<div className="display-horizontally">
 				<input
 					type="range"
 					className="volume-bar orient-vertical"
@@ -169,7 +176,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 				/>
 				<div className="current-mood">{this.state.healthState.mood}</div>
 			</div>
-			<div>
+			<div className="display-horizontally">
 				<input
 					type="range"
 					className="volume-bar orient-vertical"
