@@ -41,7 +41,6 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 			{this.renderPagination()}
 			{this.renderInputField()}
 			{this.renderSpoiler()}
-			{this.shrinkSliders()}
 		</div>;
 	}
 
@@ -132,12 +131,6 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 		</p>;
 	}
 
-	private shrinkSliders() {
-		/*var items = document.getElementsByClassName("orient-vertical");
-		for (var i = 0; i < items.length; i++) {
-			items[i].setAttribute("width", "100px");
-		}*/
-	}
 	private renderSpoiler() {
 		return <div>
 			<div className="display-horizontally">
