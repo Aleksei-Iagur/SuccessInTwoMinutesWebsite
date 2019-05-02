@@ -73,5 +73,9 @@
 	.display-horizontally {
 		display: inline-block;
 		width: 100px;
+		text-align: center;
+	}
+	.b {
+		font-weight: bold;
 	}
 }

@@ -134,6 +134,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 	private renderSpoiler() {
 		return <div>
 			<div className="display-horizontally">
+				<span>Happiness</span>
 				<input
 					type="range"
 					className="volume-bar orient-vertical"
@@ -143,9 +144,10 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 					step="1"
 					onChange={(event) => this.onHappinessInput(event)}
 				/>
-				<div className="current-happiness">{this.state.healthState.happiness}</div>
+				<div className="current-happiness b">{this.state.healthState.happiness}</div>
 			</div>
 			<div className="display-horizontally">
+				<span>Energy</span>
 				<input
 					type="range"
 					className="volume-bar orient-vertical"
@@ -155,9 +157,10 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 					step="1"
 					onChange={(event) => this.onEnergyInput(event)}
 				/>
-				<div className="current-energy">{this.state.healthState.energy}</div>
+				<div className="current-energy b">{this.state.healthState.energy}</div>
 			</div>
 			<div className="display-horizontally">
+				<span>Mood</span>
 				<input
 					type="range"
 					className="volume-bar orient-vertical"
@@ -167,9 +170,10 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 					step="1"
 					onChange={(event) => this.onMoodInput(event)}
 				/>
-				<div className="current-mood">{this.state.healthState.mood}</div>
+				<div className="current-mood b">{this.state.healthState.mood}</div>
 			</div>
 			<div className="display-horizontally">
+				<span>Hunger</span>
 				<input
 					type="range"
 					className="volume-bar orient-vertical"
@@ -179,7 +183,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 					step="1"
 					onChange={(event) => this.onHungerInput(event)}
 				/>
-				<div className="current-hunger">{this.state.healthState.hunger}</div>
+				<div className="current-hunger b">{this.state.healthState.hunger}</div>
 			</div>
 
 		</div>
