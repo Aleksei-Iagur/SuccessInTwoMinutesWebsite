@@ -134,7 +134,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 	private renderSpoiler() {
 		return <div>
 			<div className="display-horizontally">
-				<span>Happiness</span>
+				<p>Happiness</p>
 				<input
 					type="range"
 					className="volume-bar orient-vertical"
@@ -147,7 +147,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 				<div className="current-happiness b">{this.state.healthState.happiness}</div>
 			</div>
 			<div className="display-horizontally">
-				<span>Energy</span>
+				<p>Energy</p>
 				<input
 					type="range"
 					className="volume-bar orient-vertical"
@@ -160,7 +160,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 				<div className="current-energy b">{this.state.healthState.energy}</div>
 			</div>
 			<div className="display-horizontally">
-				<span>Mood</span>
+				<p>Mood</p>
 				<input
 					type="range"
 					className="volume-bar orient-vertical"
@@ -173,7 +173,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 				<div className="current-mood b">{this.state.healthState.mood}</div>
 			</div>
 			<div className="display-horizontally">
-				<span>Hunger</span>
+				<p>Hunger</p>
 				<input
 					type="range"
 					className="volume-bar orient-vertical"
