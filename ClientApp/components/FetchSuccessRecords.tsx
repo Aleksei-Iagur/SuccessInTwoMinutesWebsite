@@ -184,8 +184,8 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 					onChange={(event) => this.onHungerInput(event)}
 				/>
 				<div className="current-hunger b">{this.state.healthState.hunger}</div>
-			</div>
-
+            </div>
+            <input type="button">Save state</input>
 		</div>
 	}
 
