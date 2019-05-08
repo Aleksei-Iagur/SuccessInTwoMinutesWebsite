@@ -116,13 +116,17 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 		});
 	}
 
-	onHungerInput(event: React.ChangeEvent<HTMLInputElement>) {
-		var currentState = this.state.healthState;
-		currentState.hunger = parseInt(event.target.value);
-		this.setState({
-			healthState: currentState
-		});
-	}
+    addHealthState() {
+        var currentState = this.state.healthState;
+    }
+
+    onHungerInput(event: React.ChangeEvent<HTMLInputElement>) {
+        var currentState = this.state.healthState;
+        currentState.hunger = parseInt(event.target.value);
+        this.setState({
+            healthState: currentState
+        });
+    }
 
 	private renderInputField() {
 		return <p className='clearfix text-center'>
@@ -185,7 +189,7 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 				/>
 				<div className="current-hunger b">{this.state.healthState.hunger}</div>
             </div>
-            <input type="button">Save state</input>
+            <button onClick={() => this.addHealthState()}>Save state</button>
 		</div>
 	}
 
