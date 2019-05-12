@@ -76,7 +76,9 @@ class FetchSuccessRecords extends React.Component<SuccessInTwoMinutesProps, { te
 	}
 
 	onSave() {
-		if (this.state.text === '') return;
+        if (this.state.text === '') {
+            return;
+        }
 
 		var datetime = this.getDate();
 		var record = { dateFormatted: datetime, successText: this.state.text };
